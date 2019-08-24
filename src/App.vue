@@ -1,22 +1,19 @@
 <template>
   <div id="app">
     <!-- mutations -->
-    <button @click="decrementCount({amount:2})">-</button>
+    <button @click="decrementCountAsync({amount:2})">-</button>
     <span>{{count}}</span>
-    <button @click="incrementCount">+</button>
+    <button @click="incrementCountAsync">+</button>
 
-    <!-- <p>App.vue:{{count}}</p>
+    <hr />
     <p>{{completedTodos}}</p>
-    <p>{{completedTodosCount}}</p>
-    <p>{{getTodosById(2)}}</p>-->
-
-    <!-- <Count /> -->
+    <button @click="fetchDataAsync">FetchData</button>
   </div>
 </template>
 
 <script>
 import Count from "./components/Count";
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "app",
   components: { Count },
@@ -26,42 +23,23 @@ export default {
     "completedTodosCount",
     "getTodosById"
   ]),
-  methods: mapMutations(["incrementCount", "decrementCount"])
+  methods: mapActions([
+    "incrementCountAsync",
+    "decrementCountAsync",
+    "fetchDataAsync"
+  ])
   // methods: {
-  //   increment() {
-  //     // 调用mutations 里的 incrementCount
-  //     this.$store.commit("incrementCount");
+  //   incrementCount() {
+  //     // 触发actions
+  //     this.$store.dispatch("incrementCountAsync");
   //   },
-  //   decrement(n) {
-  //     // 调用mutations 里的 decrementCount
-  //     this.$store.commit("decrementCount", n);
-  //   }
-  // }
-  // 写法3
-  // computed: mapState(["count", "todos"])
-
-  // 写法2
-  // computed: mapState({
-  //   count: state => state.count,
-  //   // count:function(state){
-  //   //   return state.count
-  //   // },
-  //   todos: state => state.todos
-  // })
-
-  // 写法1
-  // computed: {
-  //   count() {
-  //     return this.$store.getters.getCount;
+  //   decrementCount(n) {
+  //     // 触发actions
+  //     this.$store.dispatch("decrementCountAsync", n);
   //   },
-  //   computedTodos() {
-  //     return this.$store.getters.completedTodos;
-  //   },
-  //   completedTodosCount() {
-  //     return this.$store.getters.completedTodosCount;
-  //   },
-  //   getTodosById() {
-  //     return this.$store.getters.getTodosById;
+  //   fetchData() {
+  //     // 触发actions
+  //     this.$store.dispatch("fetchDataAsync");
   //   }
   // }
 };

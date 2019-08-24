@@ -33,10 +33,32 @@ export default new Vuex.Store({
   },
   mutations: {
     incrementCount: state => state.count++,
-    decrementCount: (state, payload) => state.count -= payload.amount
+    decrementCount: (state, payload) => state.count -= payload.amount,
+    setTodos: (state, todos) => state.todos = todos
 
   },
   actions: {
-
+    incrementCountAsync: ({ commit }) => {
+      setTimeout(() => {
+        // 解构
+        const object = {
+          name: "misitewu",
+          age: 32
+        }
+        const { name, age } = object;
+        /** = this.$store */
+        commit("incrementCount")
+      }, 2000)
+    },
+    decrementCountAsync: (context, payload) => {
+      setTimeout(() => {
+        context/** = this.$store */.commit("decrementCount", payload)
+      }, 1000)
+    },
+    async fetchDataAsync(context) {
+      const response = await axios.get("http://jsonplaceholder.typicode.com/todos");
+      // console.log(response);
+      context.commit("setTodos", response.data)
+    }
   }
 })
