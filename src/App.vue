@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <p>App.vue:{{count}}</p>
-    <p>App.vue:{{todos}}</p>
+    <p>{{completedTodos}}</p>
+    <p>{{completedTodosCount}}</p>
+    <p>{{getTodosById(2)}}</p>
 
     <Count />
   </div>
@@ -9,12 +11,18 @@
 
 <script>
 import Count from "./components/Count";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "app",
   components: { Count },
+  computed: mapGetters([
+    "count",
+    "completedTodos",
+    "completedTodosCount",
+    "getTodosById"
+  ])
   // 写法3
-  computed: mapState(["count", "todos"])
+  // computed: mapState(["count", "todos"])
 
   // 写法2
   // computed: mapState({
@@ -28,10 +36,16 @@ export default {
   // 写法1
   // computed: {
   //   count() {
-  //     return this.$store.state.count;
+  //     return this.$store.getters.getCount;
   //   },
-  //   todos() {
-  //     return this.$store.state.todos;
+  //   computedTodos() {
+  //     return this.$store.getters.completedTodos;
+  //   },
+  //   completedTodosCount() {
+  //     return this.$store.getters.completedTodosCount;
+  //   },
+  //   getTodosById() {
+  //     return this.$store.getters.getTodosById;
   //   }
   // }
 };
